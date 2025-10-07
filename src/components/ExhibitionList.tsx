@@ -1,20 +1,6 @@
 import React from "react";
 import ExhibitionCard from "./ExhibitionCard";
-
-interface Exhibition {
-  id: string;
-  title: string;
-  venue?: string;
-  url?: string;
-  source?: string;
-  imageUrl?: string;
-  description?: string;
-  begindate?: string;
-  enddate?: string;
-  artist?: string;
-  medium?: string;
-  dated?: string;
-}
+import { Exhibition } from "../types/index";
 
 interface ExhibitionListProps {
   exhibitions: Exhibition[];

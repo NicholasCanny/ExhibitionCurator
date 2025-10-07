@@ -1,10 +1,16 @@
 export interface Exhibition {
   id: string;
   title: string;
-  description: string;
-  date: string;
-  location: string;
+  venue?: string;
+  url?: string;
+  source?: string;
   imageUrl?: string;
+  description?: string;
+  begindate?: string;
+  enddate?: string;
+  artist?: string;
+  medium?: string;
+  dated?: string;
 }
 
 export interface ExhibitionFormProps {
