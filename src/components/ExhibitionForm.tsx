@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 type ExhibitionData = {
   title: string;
@@ -12,28 +12,27 @@ type ExhibitionFormProps = {
   initialData?: ExhibitionData;
 };
 
-const ExhibitionForm: React.FC<ExhibitionFormProps> = ({
+export default function ExhibitionForm({
   onSubmit,
   initialData,
-}) => {
-  const [title, setTitle] = useState(initialData ? initialData.title : "");
-  const [description, setDescription] = useState(
-    initialData ? initialData.description : ""
-  );
-  const [date, setDate] = useState(initialData ? initialData.date : "");
-  const [location, setLocation] = useState(
-    initialData ? initialData.location : ""
-  );
+}: ExhibitionFormProps) {
+  const [form, setForm] = useState<ExhibitionData>({
+    title: initialData?.title ?? "",
+    description: initialData?.description ?? "",
+    date: initialData?.date ?? "",
+    location: initialData?.location ?? "",
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const exhibitionData: ExhibitionData = {
-      title,
-      description,
-      date,
-      location,
-    };
-    onSubmit(exhibitionData);
+    onSubmit(form);
   };
 
   return (
@@ -43,8 +42,8 @@ const ExhibitionForm: React.FC<ExhibitionFormProps> = ({
         <input
           type="text"
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={form.title}
+          onChange={handleChange}
           required
         />
       </div>
@@ -52,8 +51,8 @@ const ExhibitionForm: React.FC<ExhibitionFormProps> = ({
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={form.description}
+          onChange={handleChange}
           required
         />
       </div>
@@ -62,8 +61,8 @@ const ExhibitionForm: React.FC<ExhibitionFormProps> = ({
         <input
           type="date"
           id="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={form.date}
+          onChange={handleChange}
           required
         />
       </div>
@@ -72,14 +71,12 @@ const ExhibitionForm: React.FC<ExhibitionFormProps> = ({
         <input
           type="text"
           id="location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          value={form.location}
+          onChange={handleChange}
           required
         />
       </div>
       <button type="submit">Submit</button>
     </form>
   );
-};
-
-export default ExhibitionForm;
+}

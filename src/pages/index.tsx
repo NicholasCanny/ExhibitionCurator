@@ -1,7 +1,11 @@
-import React from "react";
 import Navbar from "../components/Navbar";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  useEffect(() => {
+    document.title = "Home - Exhibition Curator";
+  }, []);
+
   return (
     <div>
       <Navbar />
