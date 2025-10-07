@@ -2,8 +2,23 @@ import { useEffect, useState } from "react";
 import ExhibitionList from "../components/ExhibitionList";
 import Navbar from "../components/Navbar";
 
+interface Exhibition {
+  id: string;
+  title: string;
+  venue?: string;
+  url?: string;
+  source?: string;
+  imageUrl?: string;
+  description?: string;
+  begindate?: string;
+  enddate?: string;
+  artist?: string;
+  medium?: string;
+  dated?: string;
+}
+
 function ExhibitionsPage() {
-  const [exhibitions, setExhibitions] = useState<any[]>([]);
+  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,19 +42,22 @@ function ExhibitionsPage() {
         const harvardExhibitions = await Promise.all(
           (harvardData.records || []).map(async (ex: any) => {
             // Try to fetch the first artwork for this exhibition
-            let imageUrl;
+            let imageUrl, artist, medium, dated;
             try {
               const artRes = await fetch(
                 `https://api.harvardartmuseums.org/object?exhibition=${ex.id}&size=1&apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
               );
               if (artRes.ok) {
                 const artData = await artRes.json();
-                if (
-                  artData.records &&
-                  artData.records[0] &&
-                  artData.records[0].primaryimageurl
-                ) {
-                  imageUrl = artData.records[0].primaryimageurl;
+                if (artData.records && artData.records[0]) {
+                  const art = artData.records[0];
+                  imageUrl = art.primaryimageurl;
+                  artist =
+                    art.people && art.people[0]
+                      ? art.people[0].name
+                      : undefined;
+                  medium = art.medium;
+                  dated = art.dated;
                 }
               }
             } catch {
@@ -51,7 +69,13 @@ function ExhibitionsPage() {
               venue: ex.venue || "Harvard Art Museums",
               url: ex.url || "https://harvardartmuseums.org/visit/exhibitions",
               source: "Harvard",
-              imageUrl, // <-- add imageUrl here
+              imageUrl,
+              description: ex.description,
+              begindate: ex.begindate,
+              enddate: ex.enddate,
+              artist,
+              medium,
+              dated,
             };
           })
         );
@@ -74,7 +98,13 @@ function ExhibitionsPage() {
               venue: objData.repository || "The Met",
               url: objData.objectURL,
               source: "The Met",
-              imageUrl: objData.primaryImageSmall || objData.primaryImage, // <-- add imageUrl here
+              imageUrl: objData.primaryImageSmall || objData.primaryImage,
+              artist: objData.artistDisplayName,
+              medium: objData.medium,
+              dated: objData.objectDate,
+              description: objData.creditLine,
+              begindate: undefined,
+              enddate: undefined,
             };
           })
         );
@@ -95,13 +125,34 @@ function ExhibitionsPage() {
     .filter((ex) => ex.title.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => (a[sortBy] || "").localeCompare(b[sortBy] || ""));
 
+  const [saved, setSaved] = useState<Exhibition[]>([]);
+
+  // Save handler
+  const handleSave = (exhibition: Exhibition) => {
+    setSaved((prev) =>
+      prev.find((ex) => ex.id === exhibition.id) ? prev : [...prev, exhibition]
+    );
+  };
+  const handleUnsave = (exhibition: Exhibition) => {
+    setSaved((prev) => prev.filter((ex) => ex.id !== exhibition.id));
+  };
+
+  // Optionally, persist to localStorage
+  useEffect(() => {
+    localStorage.setItem("savedExhibitions", JSON.stringify(saved));
+  }, [saved]);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("savedExhibitions");
+    if (savedData) setSaved(JSON.parse(savedData));
+  }, []);
+
   return (
     <>
       <Navbar />
       <main>
-        <header>Exhibitions</header>
+        <h1 className="header">Exhibitions</h1>
 
-        {/* Search + Sort Controls */}
         <form className="controls">
           <input
             type="text"
@@ -120,7 +171,14 @@ function ExhibitionsPage() {
 
         {loading && <p className="center-text">Loading exhibitions...</p>}
         {error && <p className="error-message">{error}</p>}
-        {!loading && !error && <ExhibitionList exhibitions={filtered} />}
+        {!loading && !error && (
+          <ExhibitionList
+            exhibitions={filtered}
+            onSave={handleSave}
+            onUnsave={handleUnsave}
+            savedIds={saved.map((ex) => ex.id)}
+          />
+        )}
       </main>
     </>
   );

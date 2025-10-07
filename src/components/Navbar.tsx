@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './Navbar.module.css';
+import Link from "next/link";
+import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   return (
@@ -10,6 +10,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link href="/exhibitions">Exhibitions</Link>
+        </li>
+        <li>
+          <Link href="/SavedExhibitions">Saved Exhibitions</Link>
         </li>
       </ul>
     </nav>
