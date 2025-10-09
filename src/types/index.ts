@@ -4,7 +4,7 @@ export interface Exhibition {
   venue?: string;
   url?: string;
   source?: string;
-  imageUrl?: string;
+  imageUrl: string | null;
   description?: string;
   begindate?: string;
   enddate?: string;

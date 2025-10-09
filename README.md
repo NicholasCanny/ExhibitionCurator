@@ -1,84 +1,45 @@
-# Exhibition Curator
+Exhibition Curator
 
-## Overview
-The Exhibition Curator application is designed to manage and display exhibitions. It provides a user-friendly interface for adding, editing, and viewing exhibitions.
+Link to deployed website:
 
-## Project Structure
-```
-exhibition-curator
-├── public
-│   └── favicon.ico
-├── src
-│   ├── pages
-│   │   ├── _app.tsx
-│   │   ├── index.tsx
-│   │   └── exhibitions.tsx
-│   ├── components
-│   │   ├── ExhibitionList.tsx
-│   │   ├── ExhibitionForm.tsx
-│   │   └── Navbar.tsx
-│   ├── styles
-│   │   └── globals.css
-│   └── types
-│       └── index.ts
-├── next.config.js
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+https://exhibition-curator-n7ud.onrender.com
 
-## Getting Started
+APIs Used:
 
-### Prerequisites
-- Node.js (version 12 or later)
-- npm or yarn
+- Harvard Art Museums API
+- The Metropolitan Museum of Art Collection API
 
-### Installation
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```
-   cd exhibition-curator
-   ```
-3. Install the dependencies:
-   ```
-   npm install
-   ```
-   or
-   ```
-   yarn install
-   ```
+Project Description:
 
-### Running the Application
-To start the development server, run:
-```
-npm run dev
-```
-or
-```
-yarn dev
-```
-The application will be available at `http://localhost:3000`.
+Exhibition Curator is a web application inspired by the idea of creating viewer-driven virtual exhibitions from the combined catalogues of museums and universities. Designed for researchers, students, and art lovers, the platform enables users to search, filter, and curate exhibitions using real data from the Harvard Art Museums and The Metropolitan Museum of Art APIs.
 
-### Building for Production
-To build the application for production, run:
-```
-npm run build
-```
-or
-```
-yarn build
-```
+Users can enter search terms or use preset filters to discover artworks, then select and save their favourites into a personalised exhibition that persists for the duration of their session. Each curated exhibition displays high-quality images and detailed information about the selected artworks, with direct links to museum websites for further exploration or in-person visits.
 
-### Usage
-- Navigate to the homepage to view the main content.
-- Use the navigation bar to access different sections of the application.
-- Add or edit exhibitions using the provided form.
+The application features:
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+- Search and filter exhibitions by title or venue.
+- Save artworks into a temporary, session-based collection that can be viewed and expanded.
+- Display images and core information for each artwork, with interactive exhibition cards.
+- Clear navigation and user feedback, including error messages and loading indicators.
+- Responsive design and accessibility considerations for use on any device.
+- Fast loading of media content and clear communication of loading states.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This software requires Node.js version 18 or above to work effectively.
+
+Clone the repository from here:
+
+https://github.com/NicholasCanny/ExhibitionCurator
+
+After cloning, navigate into the project directory:
+
+- cd exhibition-curator
+
+Install dependencies:
+
+- npm install
+
+To run the development server:
+
+- npm run dev
+
+Open your browser and go to http://localhost:3000 to view the app.
