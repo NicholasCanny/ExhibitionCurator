@@ -5,8 +5,8 @@ import { Exhibition } from "../types/index";
  * Custom hook for managing saved exhibitions in localStorage.
  *
  * On mount, it loads saved exhibitions from localStorage.
- * It only writes to localStorage when the saved array is non-empty,
- * preventing overwriting localStorage with an empty array on initial render.
+ * It only writes to localStorage when the saved array is not empty,
+ * this prevents overwriting localStorage with an empty array on initial render.
  *
  * Provides handleSave and handleUnsave to add/remove exhibitions.
  */

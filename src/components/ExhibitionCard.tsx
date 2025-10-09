@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Exhibition } from "../types/index";
 
 interface ExhibitionCardProps {
@@ -8,17 +8,26 @@ interface ExhibitionCardProps {
   isSaved?: boolean;
 }
 
-const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
+export default function ExhibitionCard({
   exhibition,
   onSave,
   onUnsave,
   isSaved,
-}) => {
+}: ExhibitionCardProps) {
   const [showModal, setShowModal] = useState(false);
+
+  const handleSaveUnsave = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isSaved) {
+      onUnsave?.();
+    } else {
+      onSave?.();
+    }
+  };
 
   return (
     <section className="exhibition-card">
-      {/* Only image, venue, and title visible before modal */}
       <div
         className="article-card"
         style={{ cursor: "pointer" }}
@@ -26,7 +35,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
       >
         <div className="image-container">
           <img
-            src={exhibition.imageUrl || "/placeholder.jpg"}
+            src={exhibition.imageUrl ?? "/placeholder.jpg"}
             alt={`Image for ${exhibition.title}`}
             style={{ width: "100%", height: "auto", borderRadius: "8px" }}
             onError={(e) => {
@@ -40,30 +49,17 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
             <strong>Venue:</strong> {exhibition.venue}
           </p>
         )}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (isSaved) {
-              onUnsave && onUnsave();
-            } else {
-              onSave && onSave();
-            }
-          }}
-          className="button"
-        >
+        <button onClick={handleSaveUnsave} className="button">
           {isSaved ? "Unsave" : "Save"}
         </button>
       </div>
-      {/* Save/Unsave Button */}
 
-      {/* Modal with all details */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>{exhibition.title}</h2>
             <img
-              src={exhibition.imageUrl || "/placeholder.jpg"}
+              src={exhibition.imageUrl ?? "/placeholder.jpg"}
               alt={`Full image for ${exhibition.title}`}
               className="modal-img"
               onError={(e) => {
@@ -95,7 +91,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
                 <strong>Source:</strong> {exhibition.source}
               </p>
             )}
-            <p>{exhibition.description || "No description available."}</p>
+            <p>{exhibition.description ?? "No description available."}</p>
             {exhibition.url && (
               <a
                 href={exhibition.url}
@@ -109,18 +105,7 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
             <button onClick={() => setShowModal(false)} className="button">
               Close
             </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (isSaved) {
-                  onUnsave && onUnsave();
-                } else {
-                  onSave && onSave();
-                }
-              }}
-              className="button"
-            >
+            <button onClick={handleSaveUnsave} className="button">
               {isSaved ? "Unsave" : "Save"}
             </button>
           </div>
@@ -128,6 +113,4 @@ const ExhibitionCard: React.FC<ExhibitionCardProps> = ({
       )}
     </section>
   );
-};
-
-export default ExhibitionCard;
+}

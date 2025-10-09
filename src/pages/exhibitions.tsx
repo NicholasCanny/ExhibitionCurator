@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ExhibitionList from "../components/ExhibitionList";
 import Navbar from "../components/Navbar";
 import { useExhibitions } from "../hooks/useExhibitions";
 import { useSavedExhibitions } from "../hooks/useSavedExhibitions";
 
 function ExhibitionsPage() {
+  useEffect(() => {
+    document.title = "Exhibitions - Exhibition Curator";
+  }, []);
+
   const { exhibitions, loading, error } = useExhibitions();
   const { saved, handleSave, handleUnsave } = useSavedExhibitions();
 

@@ -1,12 +1,15 @@
-import React, { FC } from "react";
 import ExhibitionList from "../components/ExhibitionList";
 import Navbar from "../components/Navbar";
 import { useSavedExhibitions } from "../hooks/useSavedExhibitions";
+import { useEffect } from "react";
 
-const SavedExhibitionsPage: FC = () => {
+export default function SavedExhibitionsPage() {
+  useEffect(() => {
+    document.title = "Saved Exhibitions - Exhibition Curator";
+  }, []);
+
   const { saved, handleUnsave } = useSavedExhibitions();
 
-  console.log("Saved exhibitions:", saved);
   return (
     <>
       <Navbar />
@@ -30,6 +33,4 @@ const SavedExhibitionsPage: FC = () => {
       </main>
     </>
   );
-};
-
-export default SavedExhibitionsPage;
+}
