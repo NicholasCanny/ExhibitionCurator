@@ -118,7 +118,3 @@ export default function ExhibitionCard({
   );
 }
 
-// When mapping Harvard exhibition/object data:
-// imageUrl: record.images && record.images.length > 0
-//   ? record.images[0].baseimageurl + "?height=150&width=150"
-//   : null
