@@ -35,9 +35,12 @@ export default function ExhibitionCard({
       >
         <div className="image-container">
           <img
-            src={exhibition.imageUrl ?? "/placeholder.jpg"}
+            src={
+              exhibition.imageUrl && exhibition.imageUrl.trim() !== ""
+                ? exhibition.imageUrl
+                : "/placeholder.jpg"
+            }
             alt={`Image for ${exhibition.title}`}
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = "/placeholder.jpg";
             }}
@@ -114,3 +117,4 @@ export default function ExhibitionCard({
     </section>
   );
 }
+

@@ -4,7 +4,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 0 0 12px 12px;
   display: flex;
-  justify-content: center; /* Center the ul horizontally */
+  justify-content: center;
   align-items: center;
 }
 
@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   align-items: center;
-  justify-content: center; /* Center the links in the ul */
+  justify-content: center;
 }
 
 .navbar li {

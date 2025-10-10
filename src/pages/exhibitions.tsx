@@ -24,6 +24,12 @@ function ExhibitionsPage() {
       <Navbar />
       <main>
         <h1 className="header">Exhibitions</h1>
+        <p className="center-text">
+          Browse exhibitions below. Click "Save" on any exhibition to add it to
+          your personal collection. <br />
+          You can view your saved exhibitions by clicking "Saved Exhibitions" in
+          the navigation bar.
+        </p>
         <form className="controls">
           <input
             type="text"

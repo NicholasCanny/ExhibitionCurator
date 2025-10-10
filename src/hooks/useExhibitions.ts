@@ -19,29 +19,13 @@ export function useExhibitions() {
         if (!harvardRes.ok)
           throw new Error("Failed to fetch Harvard exhibitions");
         const harvardData = await harvardRes.json();
-        const harvardExhibitions = await Promise.all(
-          (harvardData.records || []).map(async (ex: any) => {
-            let imageUrl, artist, medium, dated;
-            try {
-              const artRes = await fetch(
-                `https://api.harvardartmuseums.org/object?exhibition=${ex.id}&size=1&apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
-              );
-              if (artRes.ok) {
-                const artData = await artRes.json();
-                if (artData.records && artData.records[0]) {
-                  const art = artData.records[0];
-                  imageUrl = art.primaryimageurl;
-                  artist =
-                    art.people && art.people[0]
-                      ? art.people[0].name
-                      : undefined;
-                  medium = art.medium;
-                  dated = art.dated;
-                }
-              }
-            } catch {
-              imageUrl = undefined;
-            }
+        const harvardExhibitions = (harvardData.records || []).map(
+          (ex: any) => {
+            const imageUrl =
+              ex.primaryimageurl ||
+              (ex.images && ex.images[0]?.baseimageurl) ||
+              null;
+
             return {
               id: `harvard-${ex.id}`,
               title: ex.title || "Untitled Exhibition",
@@ -52,11 +36,11 @@ export function useExhibitions() {
               description: ex.description,
               begindate: ex.begindate,
               enddate: ex.enddate,
-              artist,
-              medium,
-              dated,
+              artist: undefined,
+              medium: undefined,
+              dated: undefined,
             };
-          })
+          }
         );
 
         // The Met API
@@ -67,6 +51,7 @@ export function useExhibitions() {
         const metData = await metRes.json();
         const metExhibitions = await Promise.all(
           (metData.objectIDs || []).slice(0, 5).map(async (id: number) => {
+            console.log(id);
             const objRes = await fetch(
               `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
             );
