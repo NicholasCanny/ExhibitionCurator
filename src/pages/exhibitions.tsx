@@ -13,11 +13,18 @@ function ExhibitionsPage() {
   const { saved, handleSave, handleUnsave } = useSavedExhibitions();
 
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<"title" | "venue">("title");
+  const [sortBy, setSortBy] = useState<
+    "title" | "venue" | "begindate" | "enddate" | "source"
+  >("title");
 
   const filtered = exhibitions
     .filter((ex) => ex.title.toLowerCase().includes(search.toLowerCase()))
-    .sort((a, b) => (a[sortBy] || "").localeCompare(b[sortBy] || ""));
+    .sort((a, b) => {
+      if (sortBy === "begindate" || sortBy === "enddate") {
+        return (a[sortBy] || "").localeCompare(b[sortBy] || "");
+      }
+      return (a[sortBy] || "").localeCompare(b[sortBy] || "");
+    });
 
   return (
     <>
@@ -39,10 +46,13 @@ function ExhibitionsPage() {
           />
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "title" | "venue")}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
           >
             <option value="title">Title</option>
             <option value="venue">Venue</option>
+            <option value="begindate">Start Date</option>
+            <option value="enddate">End Date</option>
+            <option value="source">Source</option>
           </select>
         </form>
         {loading && <p className="center-text">Loading exhibitions...</p>}
