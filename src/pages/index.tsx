@@ -34,7 +34,10 @@ const HomePage = () => {
         <div className="home-features" style={{ marginTop: "2rem" }}>
           <h2 className="home-section-title">How It Works</h2>
           <ul className="home-list">
-            <li>Search and filter exhibitions from multiple museums</li>
+            <li>
+              Search and filter exhibitions from Harvard Art Museums and
+              Metropolitan Museum of Art
+            </li>
             <li>Save your favourite artworks to a personal collection</li>
             <li>View images and details for each exhibition</li>
             <li>Your selections are saved for your session</li>

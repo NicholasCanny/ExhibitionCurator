@@ -14,7 +14,7 @@ export function useExhibitions() {
       try {
         // Harvard API
         const harvardRes = await fetch(
-          `https://api.harvardartmuseums.org/exhibition?apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
+          `https://api.harvardartmuseums.org/exhibition?size=20&apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
         );
         if (!harvardRes.ok)
           throw new Error("Failed to fetch Harvard exhibitions");
@@ -50,8 +50,7 @@ export function useExhibitions() {
         if (!metRes.ok) throw new Error("Failed to fetch Met exhibitions");
         const metData = await metRes.json();
         const metExhibitions = await Promise.all(
-          (metData.objectIDs || []).slice(0, 5).map(async (id: number) => {
-            console.log(id);
+          (metData.objectIDs || []).slice(0, 20).map(async (id: number) => {
             const objRes = await fetch(
               `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
             );
