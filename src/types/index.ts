@@ -13,11 +13,6 @@ export interface Exhibition {
   dated?: string;
 }
 
-export interface ExhibitionFormProps {
-  exhibition?: Exhibition;
-  onSubmit: (data: Exhibition) => void;
-}
-
 export interface ExhibitionListProps {
   exhibitions: Exhibition[];
 }

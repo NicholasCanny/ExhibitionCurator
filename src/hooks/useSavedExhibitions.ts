@@ -6,7 +6,7 @@ import { Exhibition } from "../types/index";
  *
  * On mount, it loads saved exhibitions from localStorage.
  * It only writes to localStorage when the saved array is not empty,
- * this prevents overwriting localStorage with an empty array on initial render.
+ * which prevents overwriting localStorage with an empty array on initial render.
  *
  * Provides handleSave and handleUnsave to add/remove exhibitions.
  */

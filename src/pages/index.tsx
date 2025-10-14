@@ -15,29 +15,35 @@ const HomePage = () => {
           Your platform for managing and showcasing exhibitions.
         </p>
         <div className="home-info-box">
-          <h2 className="home-section-title">Get Started</h2>
+          <h2 className="home-section-title">How It Works</h2>
           <ul className="home-list">
             <li>
               <span role="img" aria-label="search">
                 🔍
               </span>{" "}
-              <strong>Browse</strong> exhibitions from world-class museums
+              <strong>Browse</strong> exhibitions from Harvard Art Museums and
+              Metropolitan Museum of Art
             </li>
             <li>
               <span role="img" aria-label="star">
                 ⭐
               </span>{" "}
-              <strong>Curate</strong> your own collection
+              <strong>Curate</strong> your own personal collection by saving
+              favourite artworks
             </li>
-          </ul>
-        </div>
-        <div className="home-features" style={{ marginTop: "2rem" }}>
-          <h2 className="home-section-title">How It Works</h2>
-          <ul className="home-list">
-            <li>Search and filter exhibitions from multiple museums</li>
-            <li>Save your favourite artworks to a personal collection</li>
-            <li>View images and details for each exhibition</li>
-            <li>Your selections are saved for your session</li>
+            <li>
+              <span role="img" aria-label="image">
+                🖼️
+              </span>{" "}
+              <strong>View</strong> images and details for each exhibition
+            </li>
+            <li>
+              <span role="img" aria-label="session">
+                💾
+              </span>{" "}
+              <strong>Session Save</strong> – your selections are saved for your
+              session
+            </li>
           </ul>
         </div>
         <a href="/exhibitions" className="button">
