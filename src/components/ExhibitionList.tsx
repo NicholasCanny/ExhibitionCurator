@@ -19,7 +19,7 @@ export default function ExhibitionList({
   }
 
   return (
-    <div className="grid-container">
+    <div className="grid-container" aria-label="Exhibition cards grid">
       {exhibitions.map((exhibition) => (
         <ExhibitionCard
           key={exhibition.id}

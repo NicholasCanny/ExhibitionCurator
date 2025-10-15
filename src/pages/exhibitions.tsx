@@ -13,46 +13,44 @@ function ExhibitionsPage() {
   const { saved, handleSave, handleUnsave } = useSavedExhibitions();
 
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<
-    "title" | "venue" | "begindate" | "enddate" | "source"
-  >("title");
+  const [sortBy, setSortBy] = useState<"title" | "venue" | "artist" | "dated">(
+    "title"
+  );
 
   const filtered = exhibitions
     .filter((ex) => ex.title.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
-      if (sortBy === "begindate" || sortBy === "enddate") {
-        return (a[sortBy] || "").localeCompare(b[sortBy] || "");
-      }
       return (a[sortBy] || "").localeCompare(b[sortBy] || "");
     });
 
   return (
     <>
       <Navbar />
-      <main>
-        <h1 className="header">Exhibitions</h1>
+      <main aria-label="Exhibitions page main content">
+        <h1 className="header">Artworks</h1>
         <p className="center-text">
-          Browse exhibitions below. Click "Save" on any exhibition to add it to
-          your personal collection. <br />
-          You can view your saved exhibitions by clicking "Saved Exhibitions" in
-          the navigation bar.
+          Browse artworks below. Click "Save" on any artwork to add it to your
+          personal collection. <br />
+          You can view your saved artworks by clicking "My Collection" in the
+          navigation bar.
         </p>
-        <form className="controls">
+        <form className="controls" aria-label="Search and sort controls">
           <input
             type="text"
-            placeholder="Search exhibitions"
+            placeholder="Search artworks"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search artworks by title"
           />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            aria-label="Sort artworks by"
           >
             <option value="title">Title</option>
-            <option value="venue">Venue</option>
-            <option value="begindate">Start Date</option>
-            <option value="enddate">End Date</option>
-            <option value="source">Source</option>
+            <option value="artist">Artist</option>
+            <option value="venue">Museum</option>
+            <option value="dated">Date</option>
           </select>
         </form>
         {loading && <p className="center-text">Loading exhibitions...</p>}

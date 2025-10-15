@@ -32,8 +32,9 @@ export default function ExhibitionCard({
         className="article-card"
         style={{ cursor: "pointer" }}
         onClick={() => setShowModal(true)}
+        aria-label={`Open details for ${exhibition.title}`}
       >
-        <div className="image-container">
+        <div className="image-container" aria-label="Exhibition image">
           <img
             src={
               exhibition.imageUrl && exhibition.imageUrl.trim() !== ""
@@ -49,17 +50,33 @@ export default function ExhibitionCard({
         <h3>{exhibition.title}</h3>
         {exhibition.venue && (
           <p>
-            <strong>Venue:</strong> {exhibition.venue}
+            <strong>Museum:</strong> {exhibition.venue}
           </p>
         )}
-        <button onClick={handleSaveUnsave} className="button">
+        <button
+          onClick={handleSaveUnsave}
+          className="button"
+          aria-label={`${isSaved ? "Remove" : "Add"} ${exhibition.title} ${
+            isSaved ? "from" : "to"
+          } saved exhibitions`}
+        >
           {isSaved ? "Unsave" : "Save"}
         </button>
       </div>
 
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowModal(false)}
+          aria-label="Modal overlay"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+            aria-label="Modal content"
+          >
             <h2>{exhibition.title}</h2>
             <img
               src={exhibition.imageUrl ?? "/placeholder.jpg"}
@@ -86,15 +103,30 @@ export default function ExhibitionCard({
             )}
             {exhibition.venue && (
               <p>
-                <strong>Venue:</strong> {exhibition.venue}
+                <strong>Museum:</strong> {exhibition.venue}
               </p>
             )}
-            {exhibition.source && (
+
+            {exhibition.department && (
               <p>
-                <strong>Source:</strong> {exhibition.source}
+                <strong>Department:</strong> {exhibition.department}
               </p>
             )}
-            <p>{exhibition.description ?? "No description available."}</p>
+            {exhibition.dimensions && (
+              <p>
+                <strong>Dimensions:</strong> {exhibition.dimensions}
+              </p>
+            )}
+            {exhibition.culture && (
+              <p>
+                <strong>Culture:</strong> {exhibition.culture}
+              </p>
+            )}
+            {exhibition.period && (
+              <p>
+                <strong>Period:</strong> {exhibition.period}
+              </p>
+            )}
             {exhibition.url && (
               <a
                 href={exhibition.url}
@@ -105,10 +137,20 @@ export default function ExhibitionCard({
                 View on museum website
               </a>
             )}
-            <button onClick={() => setShowModal(false)} className="button">
+            <button
+              onClick={() => setShowModal(false)}
+              className="button"
+              aria-label={`Close details modal for ${exhibition.title}`}
+            >
               Close
             </button>
-            <button onClick={handleSaveUnsave} className="button">
+            <button
+              onClick={handleSaveUnsave}
+              className="button"
+              aria-label={`${isSaved ? "Remove" : "Add"} ${exhibition.title} ${
+                isSaved ? "from" : "to"
+              } saved exhibitions`}
+            >
               {isSaved ? "Unsave" : "Save"}
             </button>
           </div>
@@ -117,4 +159,3 @@ export default function ExhibitionCard({
     </section>
   );
 }
-

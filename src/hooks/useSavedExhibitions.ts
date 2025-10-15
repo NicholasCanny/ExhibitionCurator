@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Exhibition } from "../types/index";
 
 /**
- * Custom hook for managing saved exhibitions in localStorage.
+ * Custom hook for managing saved artworks in localStorage.
  *
- * On mount, it loads saved exhibitions from localStorage.
+ * On mount, it loads saved artworks from localStorage.
  * It only writes to localStorage when the saved array is not empty,
  * which prevents overwriting localStorage with an empty array on initial render.
  *
- * Provides handleSave and handleUnsave to add/remove exhibitions.
+ * Provides handleSave and handleUnsave to add/remove artworks.
  */
 
 export function useSavedExhibitions() {

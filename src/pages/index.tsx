@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <main className="container home-main">
+      <main className="container home-main" aria-label="Home page main content">
         <h1 className="header home-title">Welcome to the Exhibition Curator</h1>
         <p className="home-subtitle">
           Your platform for managing and showcasing exhibitions.
@@ -21,7 +21,7 @@ const HomePage = () => {
               <span role="img" aria-label="search">
                 🔍
               </span>{" "}
-              <strong>Browse</strong> exhibitions from Harvard Art Museums and
+              <strong>Browse</strong> artworks from Harvard Art Museums and
               Metropolitan Museum of Art
             </li>
             <li>
@@ -35,7 +35,7 @@ const HomePage = () => {
               <span role="img" aria-label="image">
                 🖼️
               </span>{" "}
-              <strong>View</strong> images and details for each exhibition
+              <strong>View</strong> images and details for each artwork
             </li>
             <li>
               <span role="img" aria-label="session">
