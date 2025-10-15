@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <main className="container home-main">
+      <main className="container home-main" aria-label="Home page main content">
         <h1 className="header home-title">Welcome to the Exhibition Curator</h1>
         <p className="home-subtitle">
           Your platform for managing and showcasing exhibitions.

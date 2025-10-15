@@ -29,7 +29,7 @@ function ExhibitionsPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main aria-label="Exhibitions page main content">
         <h1 className="header">Exhibitions</h1>
         <p className="center-text">
           Browse exhibitions below. Click "Save" on any exhibition to add it to
@@ -37,16 +37,18 @@ function ExhibitionsPage() {
           You can view your saved exhibitions by clicking "Saved Exhibitions" in
           the navigation bar.
         </p>
-        <form className="controls">
+        <form className="controls" aria-label="Search and sort controls">
           <input
             type="text"
             placeholder="Search exhibitions"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search exhibitions by title"
           />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            aria-label="Sort exhibitions by"
           >
             <option value="title">Title</option>
             <option value="venue">Venue</option>

@@ -14,45 +14,12 @@ body {
   line-height: 1.6;
 }
 
-header {
-  background: #35424a;
-  color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
-}
-
-main > header {
-  background: none !important;
-  color: #230fd5;
-  font-size: 2rem;
-  padding: 0.5em 0 1em 0;
-  text-align: center;
-  border-radius: 0;
-}
-
-nav {
-  text-align: center;
-  margin: 10px 0;
-}
-
-nav a {
-  display: inline-block;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 10px 15px;
-}
-
-nav a:hover {
-  background: #e8491d;
-}
-
 .container {
   width: 80%;
   margin: auto;
   overflow: hidden;
 }
 
-footer,
 .footer {
   text-align: center;
   padding: 20px 0;
@@ -65,16 +32,7 @@ footer,
   font-size: 1rem;
 }
 
-.article-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  margin-bottom: 24px;
-}
-
-.article-card,
-.card,
-.individual-article-card {
+.article-card {
   background: #fff;
   border: 2px solid #381de8;
   border-radius: 12px;
@@ -90,17 +48,19 @@ footer,
   text-align: center;
 }
 
-.article-card:hover,
-.card:hover,
-.individual-article-card:hover {
+.article-card:hover {
   box-shadow: 0 8px 24px rgba(232, 73, 29, 0.15);
   transform: translateY(-4px) scale(1.02);
   background: #fbeee6;
 }
 
+.article-card:focus-within {
+  outline: 3px solid #0056b3;
+}
+
 .article-card h3 {
   margin-bottom: 10px;
-  color: hsl(121, 82%, 51%);
+  color: #2d8f2d;
   text-align: center;
 }
 
@@ -118,8 +78,7 @@ footer,
   margin-bottom: 20px;
 }
 
-.image-container img,
-.article-img {
+.image-container img {
   width: 100%;
   max-width: 500px;
   height: auto;
@@ -130,85 +89,37 @@ footer,
 .header {
   width: 100%;
   text-align: center;
-  color: blue;
+  color: #0056b3;
   padding: 10px;
   font-family: "Lobster", serif;
 }
 
-.header2 {
-  text-align: center;
-  color: black;
-  padding: 10px;
-}
-
-/* Buttons */
-button,
-.likebutton,
 .button {
   border: none;
   color: white;
-  padding: 15px 32px;
-  text-align: center;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 5px;
-  transition: background-color 0.3s, transform 0.2s;
-  cursor: pointer;
-}
-
-.button {
-  background-color: #230fd5;
+  background-color: #0056b3;
   margin-top: 10px;
   padding: 5px 10px;
   font-size: 1rem;
   font-weight: 500;
   border-radius: 8px;
   transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
 
 .button:hover,
 .button:focus {
-  background-color: #007bff;
+  background-color: #004494;
   color: #fff;
+  outline: 2px solid #ffffff;
 }
 
 .button:disabled {
-  background-color: #d3d3d3;
+  background-color: #6c757d;
+  color: #ffffff;
   cursor: not-allowed;
-}
-
-.likebutton {
-  background-color: #28a745;
-  margin: 5px 5px;
-}
-
-.likebutton:hover {
-  background-color: #218838;
-}
-
-.likebutton:disabled {
-  background-color: #a3d8a8;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 80px;
-  flex-wrap: wrap;
-}
-
-.comment-card {
-  border: 2px solid #173aad;
-  padding: 5px;
-  margin: 5px 0;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
-
-.comment-author {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: black;
 }
 
 form {
@@ -217,7 +128,7 @@ form {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 2px solid #173aad;
+  border: 2px solid #0056b3;
   border-radius: 8px;
   background-color: #f9f9f9;
   color: #333;
@@ -235,53 +146,13 @@ form textarea {
 form input:focus,
 form select:focus,
 form textarea:focus {
-  border-color: blue;
-  outline: none;
-}
-
-.navbar {
-  background-color: #f7f1f1;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  border-bottom: 2px solid #173aad;
-}
-
-.AlignCentre {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  border-color: #0056b3;
+  outline: 2px solid #0056b3;
 }
 
 @media (max-width: 768px) {
   .grid-container {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-
-  .navbar {
-    flex-direction: column;
-    padding: 15px;
   }
 
   .article-card {
@@ -294,71 +165,21 @@ form textarea:focus {
 }
 
 @media (max-width: 480px) {
-  .button,
-  .likebutton {
+  .button {
     width: 100%;
     padding: 12px 0;
     font-size: 14px;
   }
 }
 
-.comment-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.comment-avatar,
-.author-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 1rem;
-}
-
-.article-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.article-card-link:hover .article-card {
-  transform: scale(1.05);
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.user-info img {
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.comment-content {
-  background-color: #f1f1f1;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 5px;
-}
-
-.comment-date {
-  font-size: 0.8rem;
-  color: #777;
-  margin-top: 5px;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
 
-/* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #007bff;
+  background-color: #0056b3;
   border-radius: 10px;
 }
 
@@ -374,7 +195,7 @@ form textarea:focus {
 
 .home-title {
   font-size: 2.5rem;
-  color: #230fd5;
+  color: #0056b3;
   margin-bottom: 1rem;
 }
 
@@ -393,7 +214,7 @@ form textarea:focus {
 }
 
 .home-section-title {
-  color: #007bff;
+  color: #0056b3;
   margin-bottom: 1rem;
 }
 
@@ -421,7 +242,7 @@ form textarea:focus {
   justify-items: center;
   margin: 0 auto;
   padding: 5px;
-  border: 2px solid black;
+  border: 2px solid #333;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -456,9 +277,13 @@ form textarea:focus {
 .museum-link {
   display: inline-block;
   margin-top: 10px;
-  color: #230fd5;
+  color: #0056b3;
   text-decoration: underline;
   font-weight: bold;
+}
+
+.museum-link:focus {
+  outline: 2px solid #0056b3;
 }
 
 .modal-img {
@@ -466,4 +291,14 @@ form textarea:focus {
   height: auto;
   margin-bottom: 15px;
   border-radius: 8px;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  text-align: center;
 }

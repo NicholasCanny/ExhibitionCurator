@@ -12,69 +12,111 @@ export function useExhibitions() {
       setError(null);
 
       try {
-        // Harvard API
+        let harvardArtworks: Exhibition[] = [];
+        let metArtworks: Exhibition[] = [];
+
+        // Harvard OBJECTS API (individual artworks)
         const harvardRes = await fetch(
-          `https://api.harvardartmuseums.org/exhibition?size=20&apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
+          `https://api.harvardartmuseums.org/object?size=50&hasimage=1&apikey=a8a509db-aabd-42eb-8e9f-3c518d4155a0`
         );
-        if (!harvardRes.ok)
-          throw new Error("Failed to fetch Harvard exhibitions");
-        const harvardData = await harvardRes.json();
-        const harvardExhibitions = (harvardData.records || []).map(
-          (ex: any) => {
-            const imageUrl =
-              ex.primaryimageurl ||
-              (ex.images && ex.images[0]?.baseimageurl) ||
-              null;
 
-            return {
-              id: `harvard-${ex.id}`,
-              title: ex.title || "Untitled Exhibition",
-              venue: ex.venue || "Harvard Art Museums",
-              url: ex.url || "https://harvardartmuseums.org/visit/exhibitions",
+        if (harvardRes.ok) {
+          const harvardData = await harvardRes.json();
+
+          harvardArtworks = (harvardData.records || [])
+            .filter((artwork: any) => artwork.primaryimageurl)
+            .slice(0, 25)
+            .map((artwork: any) => ({
+              id: `harvard-${artwork.id}`,
+              title: artwork.title || "Untitled Artwork",
+              venue: "Harvard Art Museums",
+              url:
+                artwork.url ||
+                `https://harvardartmuseums.org/collections/object/${artwork.id}`,
               source: "Harvard",
-              imageUrl,
-              description: ex.description,
-              begindate: ex.begindate,
-              enddate: ex.enddate,
-              artist: undefined,
-              medium: undefined,
-              dated: undefined,
-            };
-          }
-        );
-
-        // The Met API
-        const metRes = await fetch(
-          `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=exhibition`
-        );
-        if (!metRes.ok) throw new Error("Failed to fetch Met exhibitions");
-        const metData = await metRes.json();
-        const metExhibitions = await Promise.all(
-          (metData.objectIDs || []).slice(0, 20).map(async (id: number) => {
-            const objRes = await fetch(
-              `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
-            );
-            const objData = await objRes.json();
-            return {
-              id: `met-${objData.objectID}`,
-              title: objData.title || "Untitled",
-              venue: objData.repository || "The Met",
-              url: objData.objectURL,
-              source: "The Met",
-              imageUrl: objData.primaryImageSmall || objData.primaryImage,
-              artist: objData.artistDisplayName,
-              medium: objData.medium,
-              dated: objData.objectDate,
-              description: objData.creditLine,
+              imageUrl: artwork.primaryimageurl || null,
+              description:
+                artwork.description ||
+                artwork.labeltext ||
+                "No description available",
+              artist: artwork.people?.[0]?.name || "Unknown Artist",
+              medium: artwork.technique || artwork.medium || "Unknown Medium",
+              dated: artwork.dated || artwork.datebegin || "Unknown Date",
+              department: artwork.classification,
+              dimensions: artwork.dimensions,
+              culture: artwork.culture,
+              period: artwork.period,
               begindate: undefined,
               enddate: undefined,
-            };
-          })
+            }));
+        }
+
+        // Met API (individual artworks)
+        const metRes = await fetch(
+          `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=painting`
         );
 
-        setExhibitions([...harvardExhibitions, ...metExhibitions]);
+        if (metRes.ok) {
+          const metData = await metRes.json();
+
+          const objectIds = (metData.objectIDs || []).slice(0, 40);
+
+          const objectPromises = objectIds.map(async (id: any) => {
+            try {
+              const objRes = await fetch(
+                `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+              );
+
+              if (objRes.ok) {
+                const objData = await objRes.json();
+                const imageUrl =
+                  objData.primaryImageSmall || objData.primaryImage;
+
+                if (
+                  imageUrl &&
+                  imageUrl.trim() !== "" &&
+                  imageUrl.includes("metmuseum.org") &&
+                  objData.title &&
+                  objData.title.trim() !== ""
+                ) {
+                  return {
+                    id: `met-${objData.objectID}`,
+                    title: objData.title || "Untitled",
+                    venue: objData.repository || "The Met",
+                    url: objData.objectURL,
+                    source: "The Met",
+                    imageUrl: imageUrl,
+                    artist: objData.artistDisplayName || "Unknown Artist",
+                    medium: objData.medium || "Unknown Medium",
+                    dated: objData.objectDate || "Unknown Date",
+                    description:
+                      objData.creditLine || "No description available",
+                    department: objData.department,
+                    dimensions: objData.dimensions,
+                    culture: objData.culture,
+                    period: objData.period,
+                    begindate: undefined,
+                    enddate: undefined,
+                  };
+                }
+              }
+              return null;
+            } catch {
+              return null;
+            }
+          });
+
+          const results = await Promise.all(objectPromises);
+          metArtworks = results.filter(Boolean).slice(0, 15);
+        }
+
+        setExhibitions([...harvardArtworks, ...metArtworks]);
+
+        if (harvardArtworks.length === 0 && metArtworks.length === 0) {
+          setError("Unable to fetch artworks from either museum API");
+        }
       } catch (err: any) {
-        setError(err.message || "Failed to fetch exhibitions");
+        setError(err.message || "Failed to fetch artworks");
       } finally {
         setLoading(false);
       }

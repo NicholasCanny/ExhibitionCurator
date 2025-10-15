@@ -13,7 +13,7 @@ export default function SavedExhibitionsPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main aria-label="Saved Exhibitions page main content">
         <h1 className="header">Saved Exhibitions</h1>
         {saved.length === 0 ? (
           <p className="center-text">
