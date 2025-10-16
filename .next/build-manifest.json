@@ -13,10 +13,10 @@
   "rootMainFiles": [],
   "rootMainFilesTree": {},
   "pages": {
-    "/SavedExhibitions": [
+    "/": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/SavedExhibitions.js"
+      "static/chunks/pages/index.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
